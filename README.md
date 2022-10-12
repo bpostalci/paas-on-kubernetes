@@ -1,1 +1,1 @@
-# paas-on-kubernetes
+# Architecting a modern PaaS solution on Kubernetes
