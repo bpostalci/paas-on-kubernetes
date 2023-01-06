@@ -4,3 +4,6 @@
 [submodule "html-syntax-checker"]
 	path = html-syntax-checker
 	url = git@github.com:bpostalci/html-syntax-checker.git
+[submodule "html-operations"]
+	path = html-operations
+	url = git@github.com:bpostalci/html-operations.git
