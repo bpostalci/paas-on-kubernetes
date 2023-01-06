@@ -1,0 +1,47 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  namespace: swe599-demo
+  name: html-beautifier
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: html-beautifier-app
+  template:
+    metadata:
+      labels:
+        app: html-beautifier-app
+    spec:
+      containers:
+        - name: html-beautifier
+          image: html-beautifier
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8082
+              protocol: TCP
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          env:
+            - name: API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: html-operations-secret
+                  key: api_key
+---
+kind: Service
+apiVersion: v1
+metadata:
+  namespace: swe599-demo
+  name: html-beautifier-service
+spec:
+  ports:
+    - protocol: TCP
+      port: 8082
+      targetPort: 8082
+  selector:
+    app: html-beautifier-app
+
