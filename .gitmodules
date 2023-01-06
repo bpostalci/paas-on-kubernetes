@@ -1,0 +1,9 @@
+[submodule "html-beautifier"]
+	path = html-beautifier
+	url = https://github.com/bpostalci/html-beautifier
+[submodule "html-syntax-checker"]
+	path = html-syntax-checker
+	url = https://github.com/bpostalci/html-syntax-checker
+[submodule "html-operations"]
+	path = html-operations
+	url = https://github.com/bpostalci/html-operations
