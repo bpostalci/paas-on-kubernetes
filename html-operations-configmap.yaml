@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: swe599-demo
+  name: html-operations-configmap
+data:
+  html_syntax_checker_url: html-syntax-checker-service:8081
+  html_beautifier_url: html-beautifier-service:8082
