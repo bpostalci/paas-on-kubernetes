@@ -1,0 +1,59 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  namespace: swe599-demo
+  name: html-operations
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: html-operations-app
+  template:
+    metadata:
+      labels:
+        app: html-operations-app
+    spec:
+      containers:
+        - name: html-operations
+          image: html-operations
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          env:
+            - name: HTML_SYNTAX_CHECKER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: html-operations-configmap
+                  key: html_syntax_checker_url
+            - name: HTML_BEAUTIFIER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: html-operations-configmap
+                  key: html_beautifier_url
+            - name: API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: html-operations-secret
+                  key: api_key
+---
+kind: Service
+apiVersion: v1
+metadata:
+  namespace: swe599-demo
+  name: html-operations-service
+spec:
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 30001
+  selector:
+    app: html-operations-app
+
