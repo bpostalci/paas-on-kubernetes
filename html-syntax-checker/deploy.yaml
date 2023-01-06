@@ -1,0 +1,47 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  namespace: swe599-demo
+  name: html-syntax-checker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: html-syntax-checker-app
+  template:
+    metadata:
+      labels:
+        app: html-syntax-checker-app
+    spec:
+      containers:
+        - name: html-syntax-checker
+          image: html-syntax-checker
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8081
+              protocol: TCP
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          env:
+            - name: API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: html-operations-secret
+                  key: api_key
+---
+kind: Service
+apiVersion: v1
+metadata:
+  namespace: swe599-demo
+  name: html-syntax-checker-service
+spec:
+  ports:
+    - protocol: TCP
+      port: 8081
+      targetPort: 8081
+  selector:
+    app: html-syntax-checker-app
+
