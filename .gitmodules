@@ -1,6 +1,3 @@
-[submodule "html-operations"]
-	path = html-operations
-	url = git@github.com:bpostalci/html-operations.git
 [submodule "html-beautifier"]
 	path = html-beautifier
 	url = git@github.com:bpostalci/html-beautifier.git
